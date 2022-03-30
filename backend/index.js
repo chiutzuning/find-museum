@@ -15,6 +15,8 @@ mongoose.connect(process.env.MONGO_URL)
 .catch(err => console.log(err));
 
 
+app.use(Express.static(__dirname+'/public'));
+
 // connect routes
 app.use("/api/users", userRoute);
 app.use("/api/pins", pinRoute);
