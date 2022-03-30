@@ -26,11 +26,11 @@
        </ul>
     </header>
     <section class="banner">
-       <img src="/img/cloud.png" alt="cloud">
-       <img src="/img/bird.png" alt="bird">
+       <img src="/img/cloud.png" id="cloud">
+       <img src="/img/bird.png" id="bird">
        <h2 id="text"><span>Find Museum With Us</span><br>See More Art</h2>
-       <img src="/img/birds.png" alt="birds">
-       <img src="/img/museum.png" alt="museum">
+       <img src="/img/birds.png" id="birds">
+       <img src="/img/museum.png" id="museum">
        <a href="#" id="btn">Explore More</a>
     </section>
     <section class="about">
@@ -54,5 +54,25 @@
         </p>
     </section>
     <div class="container" id="root"></div>
+
+    <!-- connect to animation -->
+    <script>
+      let text = document.getElementById('text');
+      let cloud = document.getElementById('cloud');
+      let bird = document.getElementById('bird');
+      let birds = document.getElementById('birds');
+      let museum = document.getElementById('museum');
+      let btn= document.getElementById('btn');
+
+      window.addEventListener('scroll', function(){
+        let value = window.scrollY;
+
+        text.style.top = 50 + value * -0.5 + '%';
+        bird.style.top = 50 + value * -1.3 + 'px';
+        birds.style.top = value * -1.3 + 'px';
+        birds.style.left = value * -4 + 'px';
+        btn.style.marginTop = value * 0.9 + 'px';
+      })
+    </script>
   </body>
 </html>
