@@ -12,11 +12,20 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.8.2",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@mui/material": "^5.5.3",
+    "@mui/system": "^5.5.3",
     "@types/react-router-dom": "^5.3.3",
     "fabric": "^5.2.1",
     "gl-matrix": "^3.4.3",
+    "mapbox-gl": "^2.7.1",
+    "react": "^18.0.0",
     "react-map-gl": "^7.0.10",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.0",
+    "worker-loader": "^3.0.8"
   },
   "browserslist": {
     "production": [
