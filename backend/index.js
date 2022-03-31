@@ -21,7 +21,14 @@ app.use(Express.static(__dirname+'/public'));
 app.use("/api/users", userRoute);
 app.use("/api/pins", pinRoute);
 
+// connect to Heroku
+app.use(express.static(path.join(__dirname, "/frontend")));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/frontend/public', 'index.html'));
+});
+
 // using library nodemon
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Backend server is running")
 });
