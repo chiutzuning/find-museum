@@ -5,15 +5,29 @@ import { Room, Star } from '@mui/icons-material';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import axios from "axios";
 import { format } from "timeago.js";
+import Register from "./components/Register";
+import Login from "./components/Login";
 
 
 
 function App() {
+  const myStorage = window.localStorage;
   const [showPopup, setShowPopup] = React.useState(true);
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [pins, setPins] = useState([]);
   const [newPlace, setNewPlace] = useState(null);
-  const currentUser = "Mark";
+  const [title, setTitle] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [star, setStar] = useState(0);
+  const [currentUser, setCurrentUser] = useState(myStorage.getItem("user"));
+
+  const [showRegister, setShowRegister] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [viewport, setViewport] = useState({
+    latitude: 52.360001,
+    longitude: 4.885278,
+    zoom: 8,
+  });
 
   const handleMarkerClick = (id, lat, long) => {
     setCurrentPlaceId(id);
@@ -21,12 +35,31 @@ function App() {
   };
 
   const handleAddClick = (e) => {
-    const [longitude, latitude] = e.lngLat;
+    // const { lat, lng: long } = e.lngLat;
     setNewPlace({
-      lat: latitude,
-      long: longitude,
+      lat: e.lngLat.lat,
+      long: e.lngLat.lng,
     });
-    console.log(e);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newPin = {
+      username: currentUsername,
+      title,
+      desc,
+      rating: star,
+      lat: newPlace.lat,
+      long: newPlace.long,
+    };
+
+    try {
+      const res = await axios.post("/pins", newPin);
+      setPins([...pins, res.data]);
+      setNewPlace(null);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -42,6 +75,11 @@ function App() {
     getPins();
   }, []);
 
+   const handleLogout = () => {
+    setCurrentUsername(null);
+    myStorage.removeItem("user");
+  };
+
   return (
     <div style={{ height: "100vh", width: "100%" }}>
         <Map
@@ -51,7 +89,6 @@ function App() {
             latitude: 52.360001,
             zoom: 8
            }}
-          //  renderChildrenInPortal={true}
            mapboxAccessToken={process.env.REACT_APP_MAPBOX}
            width="100%"
            height="100%"
@@ -111,18 +148,77 @@ function App() {
             )}
            </>
           ))}
-          {/* {newPlace && (
-            <Popup
+
+          {newPlace && (
+           <>
+             <Marker
+              latitude={newPlace.lat}
+              longitude={newPlace.long}
+             >
+               <Room />
+             </Marker>
+             <Popup
               latitude={newPlace.lat}
               longitude={newPlace.long}
               closeButton={true}
               closeOnClick={false}
               onClose={() => setNewPlace(null)}
               anchor="left"
-            >
-              Hello
+             >
+              <div>
+                <form onSubmit={handleSubmit}>
+                  <label>Title</label>
+                  <input
+                    placeholder="Enter a title"
+                    autoFocus
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <label>Description</label>
+                  <textarea
+                    placeholder="Say us something about this place."
+                    onChange={(e) => setDesc(e.target.value)}
+                  />
+                  <label>Rating</label>
+                  <select onChange={(e) => setStar(e.target.value)}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button type="submit" className="submitButton">
+                    Add Pin
+                  </button>
+                </form>
+              </div>
             </Popup>
-          )} */}
+           </>
+          )}
+
+           {/* {currentUsername ? (
+             <button className="button logout" onClick={handleLogout}>
+               Log out
+             </button>
+             ) : (
+             <div className="buttons">
+             <button className="button login" onClick={() => setShowLogin(true)}>
+              Log in
+             </button>
+             <button  className="button register" onClick={() => setShowRegister(true)}>
+               Register
+             </button>
+            </div>
+            )}
+
+            <Register />
+            {showRegister && <Register setShowRegister={setShowRegister} />}
+            {showLogin && (
+            <Login
+              setShowLogin={setShowLogin}
+              setCurrentUsername={setCurrentUsername}
+              myStorage={myStorage}
+            />
+        )} */}
         </Map>
     </div>
   );
