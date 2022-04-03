@@ -22,6 +22,7 @@ export default function Register({ setShowRegister }){
       await axios.post("/users/register", newUser);
       setError(false);
       setSuccess(true);
+      console.log(newUser);
     } catch (err) {
       setError(true);
     }
@@ -46,7 +47,7 @@ export default function Register({ setShowRegister }){
           Register
         </button>
         {success && (
-          <span className="success" onClick={() => setShowRegister(false)}>
+          <span className="success">
           Successfull. You can login now!
           </span>
         )}

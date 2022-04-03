@@ -45,7 +45,7 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPin = {
-      username: currentUsername,
+      username: currentUser,
       title,
       desc,
       rating: star,
@@ -76,7 +76,7 @@ function App() {
   }, []);
 
    const handleLogout = () => {
-    setCurrentUsername(null);
+    setCurrentUser(null);
     myStorage.removeItem("user");
   };
 
@@ -103,7 +103,7 @@ function App() {
               latitude={p.lat}
               anchor="bottom"
             >
-            {p.username === currentUser? (
+            {currentUser === p.username ?  (
               <div className="room-container-current">
               <Room
                onClick={() => handleMarkerClick(p._id, p.lat, p.long)}
@@ -195,7 +195,7 @@ function App() {
            </>
           )}
 
-           {/* {currentUsername ? (
+           {currentUser ? (
              <button className="button logout" onClick={handleLogout}>
                Log out
              </button>
@@ -210,15 +210,14 @@ function App() {
             </div>
             )}
 
-            <Register />
             {showRegister && <Register setShowRegister={setShowRegister} />}
             {showLogin && (
             <Login
               setShowLogin={setShowLogin}
-              setCurrentUsername={setCurrentUsername}
+              setCurrentUser={setCurrentUser}
               myStorage={myStorage}
             />
-        )} */}
+        )}
         </Map>
     </div>
   );
