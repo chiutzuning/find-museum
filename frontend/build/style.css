@@ -90,15 +90,15 @@ body {
 .banner #text{
   position: absolute;
   text-align: center;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 800;
   line-height: 1.5em;
   margin-top: -270px;
 }
 
 .banner #text span{
-  font-size: 50px;
-  font-weight: 800;
+  font-size: 60px;
+  font-weight: 900;
   letter-spacing: 2px;
 }
 
@@ -139,5 +139,5 @@ body {
 /* map */
 
 .container{
-  margin-top: 100vh;
+
 }

@@ -20,16 +20,7 @@ app.use("/api/users", userRoute);
 app.use("/api/pins", pinRoute);
 
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/frontend/public', 'index.html'));
-});
-
 // using library nodemon
 app.listen( process.env.PORT || 8080, () => {
   console.log("Backend server is running")
-});
-
-app.use(express.static(path.join(__dirname, "/frontend/build")));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '/frontend/build', 'index.html'));
 });
